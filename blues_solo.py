@@ -20,7 +20,7 @@ def add_note(out, instr, key_num, duration, bpm, volume):
     out << stream
 
 def note_adjust(note, scale):
-    """shifts a note by an octave till it is within an ordered scale of notes"""
+    """shifts a note till it is within an ordered scale of notes"""
     if 0 <= note <= len(scale)-1:
         return note
     elif note < 0:
@@ -32,7 +32,8 @@ def note_adjust(note, scale):
 sampling_rate = 44100.0
 Wavefile.setDefaults(sampling_rate, 16)
 
-bass = GuitarBass(sampling_rate)	# use a guitar bass as the instrument
+#bass = GuitarBass(sampling_rate)
+flute = FluteSlide(sampling_rate)
 solo = AudioStream(sampling_rate, 1)
 
 """ these are the piano key numbers for a 3 octave blues scale in A
@@ -65,7 +66,7 @@ for i in range(8):
     for note in lick:
         curr_note += note[0]
         curr_note = note_adjust(curr_note, blues_scale)
-        add_note(solo, bass, blues_scale[curr_note], note[1], beats_per_minute, 1.0)
+        add_note(solo, flute, blues_scale[curr_note], note[1], beats_per_minute, 1.0)
 
 backing_track = AudioStream(sampling_rate, 1)
 Wavefile.read('backing.wav', backing_track)
